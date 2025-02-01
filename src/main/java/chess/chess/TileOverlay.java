@@ -31,6 +31,7 @@ public class TileOverlay extends StackPane {
 
             if (!isActive) {
                 activate();
+                application.setActiveTile(this.tile);
             }
         }
     }

@@ -1,8 +1,11 @@
 package logic.pieces;
 
+import javafx.scene.image.ImageView;
+
 public abstract class Piece {
     protected final boolean isWhite;
     protected int[] position;
+    public ImageView imageView;
 
     public Piece(boolean isWhite, int x, int y) {
         this.isWhite = isWhite;

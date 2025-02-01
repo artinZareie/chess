@@ -12,7 +12,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import logic.Board;
 import logic.Engine;
+import logic.Tile;
 import logic.pieces.Piece;
+import org.jetbrains.annotations.NotNull;
+
+import java.time.Duration;
 
 public class GameBoardApplication extends GameApplication {
     private static final int WIDTH = 800;
@@ -20,6 +24,7 @@ public class GameBoardApplication extends GameApplication {
     private static final int TILE_SIZE = 100;
     private static final String TITLE = "Stupid chess game";
     private final TileOverlay[][] tileOverlays = new TileOverlay[8][8];
+    private Tile activeTile = null;
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -42,11 +47,13 @@ public class GameBoardApplication extends GameApplication {
         textBackground.setTranslateY(800);
 
         // Add player names and remaining time with custom styles.
-        StackPane player1Pane = createPlayerPane("Player 1: 10:00", Color.DARKBLUE, Color.DARKCYAN);
+        StackPane player1Pane = createPlayerPane(Engine.getInstance().whitePlayer.getName() + ": " +
+                formatDuration(Engine.getInstance().whitePlayer.getRemainingTime()), Color.DARKBLUE, Color.DARKCYAN);
         player1Pane.setTranslateX(10);
         player1Pane.setTranslateY(820);
 
-        StackPane player2Pane = createPlayerPane("Player 2: 10:00", Color.BLACK, Color.DARKCYAN);
+        StackPane player2Pane = createPlayerPane(Engine.getInstance().blackPlayer.getName() + ": " +
+                formatDuration(Engine.getInstance().blackPlayer.getRemainingTime()), Color.BLACK, Color.DARKCYAN);
         player2Pane.setTranslateX(410);
         player2Pane.setTranslateY(820);
 
@@ -69,8 +76,14 @@ public class GameBoardApplication extends GameApplication {
         Board gameBoard = Engine.getInstance().getBoard();
         for (Piece piece : gameBoard.getPieces()) {
             int[] position = piece.getPosition();
-            placePiece(piece.getImageURL(), position[0], position[1]);
+            piece.imageView = placePiece(piece.getImageURL(), position[0], position[1]);
         }
+    }
+
+    private String formatDuration(Duration duration) {
+        long minutes = duration.toMinutes();
+        long seconds = duration.minusMinutes(minutes).getSeconds();
+        return String.format("%02d:%02d", minutes, seconds);
     }
 
     private StackPane createPlayerPane(String text, Color textColor, Color bgColor) {
@@ -86,7 +99,8 @@ public class GameBoardApplication extends GameApplication {
         return pane;
     }
 
-    private void placePiece(String piece, int x, int y) {
+    @NotNull
+    private ImageView placePiece(String piece, int x, int y) {
         ImageView pieceView = FXGL.getAssetLoader().loadTexture(piece + ".png");
 
         pieceView.setFitWidth(TILE_SIZE);
@@ -96,6 +110,8 @@ public class GameBoardApplication extends GameApplication {
         pieceView.setTranslateY(y * TILE_SIZE);
 
         FXGL.getGameScene().addUINode(pieceView);
+
+        return pieceView;
     }
 
     public void deactivateAllTiles() {
@@ -104,6 +120,12 @@ public class GameBoardApplication extends GameApplication {
                 tileOverlay.deactivate();
             }
         }
+
+        activeTile = null;
+    }
+
+    public void setActiveTile(Tile tile) {
+        activeTile = tile;
     }
 
     public static void main(String[] args) {
