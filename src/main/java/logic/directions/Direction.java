@@ -1,5 +1,6 @@
 package logic.directions;
 
+import logic.Board;
 import logic.Engine;
 import logic.Move;
 
@@ -53,8 +54,22 @@ public abstract class Direction {
 
         for (int i = 1; i <= maxSteps; i++) {
             int[] pos = getPos(start, i);
-            if (Engine.getInstance().getBoard().isOutOfBounds(pos) || !Engine.getInstance().getBoard().isEmpty(pos)) {
+
+            if (Engine.getInstance().getBoard().isOutOfBounds(pos)) {
                 break;
+            }
+
+
+            if (!Engine.getInstance().getBoard().isEmpty(pos)) {
+                Board brd = Engine.getInstance().getBoard();
+//                System.out.println(Engine.getInstance().getBoard().getTile(pos).getPiece());
+//                System.out.printf("%d %d\n", start[0], start[1]);
+//                System.out.printf("%d %d\n", pos[0], pos[1]);
+//                System.out.println(Engine.getInstance().getBoard().getTile(start).getPiece());
+                if (Engine.getInstance().getBoard().getTile(pos).getPiece().isWhite() ==
+                        Engine.getInstance().getBoard().getTile(start).getPiece().isWhite()) {
+                    break;
+                }
             }
 
             if (Engine.getInstance().getBoard().getTile(pos).getPiece() != null) {

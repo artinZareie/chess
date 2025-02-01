@@ -32,12 +32,21 @@ public class TileOverlay extends StackPane {
     }
 
     private void handleClick() {
-        if (this.tile.hasPiece()) {
-            boolean isActive = this.isActive;
-
+        if (isHighlighted) {
+            Tile activeTile = application.getActiveTile();
             application.deactivateAllTiles();
 
-            if (!isActive) {
+            if (activeTile != null) {
+                Move move = new Move(activeTile, this.tile);
+                Engine.getInstance().getBoard().move(move);
+            }
+        } else if (this.tile.hasPiece()) {
+            Piece piece = this.tile.getPiece();
+            boolean isWhiteTurn = Engine.getInstance().isWhiteTurn;
+            if (isActive) {
+                application.deactivateAllTiles();
+            } else if (isWhiteTurn == piece.isWhite()) {
+                application.deactivateAllTiles();
                 activate();
                 application.setActiveTile(this.tile);
                 highlightReachableTiles();
@@ -82,7 +91,7 @@ public class TileOverlay extends StackPane {
         List<Move> moves = piece.getAllAvailableMoves();
         for (Move move : moves) {
             Tile pos = move.getTo();
-            TileOverlay targetTileOverlay = application.tileOverlays[pos.getX()][7 - pos.getY()];
+            TileOverlay targetTileOverlay = application.tileOverlays[pos.getY()][pos.getX()];
             targetTileOverlay.highlight();
         }
     }

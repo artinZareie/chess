@@ -25,9 +25,17 @@ public abstract class Piece {
         return position;
     }
 
-    public void setPosition(int x, int y) {
+    private void setPosition(int x, int y) {
         position[0] = x;
         position[1] = y;
+        updateImageViewPosition();
+    }
+
+    private void updateImageViewPosition() {
+        if (imageView != null) {
+            imageView.setTranslateX(position[0] * 100);
+            imageView.setTranslateY((7 - position[1]) * 100);
+        }
     }
 
     public abstract String getImageURL();

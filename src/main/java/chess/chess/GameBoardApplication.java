@@ -73,7 +73,7 @@ public class GameBoardApplication extends GameApplication {
         Board gameBoard = Engine.getInstance().getBoard();
         for (Piece piece : gameBoard.getPieces()) {
             int[] position = piece.getPosition();
-            position[1] = 7 - position[1];
+            position[1] = position[1];
             piece.imageView = placePiece(piece.getImageURL(), position[0], position[1]);
         }
 
@@ -81,7 +81,7 @@ public class GameBoardApplication extends GameApplication {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
                 TileOverlay tileOverlay = new TileOverlay(this, x, y);
-                tileOverlays[x][y] = tileOverlay;
+                tileOverlays[y][x] = tileOverlay;
                 board.add(tileOverlay, x, y);
             }
         }
@@ -134,5 +134,9 @@ public class GameBoardApplication extends GameApplication {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public Tile getActiveTile() {
+        return activeTile;
     }
 }

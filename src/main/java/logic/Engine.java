@@ -8,6 +8,7 @@ public class Engine {
     private Board board;
     public Player whitePlayer;
     public Player blackPlayer;
+    public boolean isWhiteTurn = true;
 
     public Engine() {
         board = new Board();
@@ -25,5 +26,9 @@ public class Engine {
 
     public Board getBoard() {
         return board;
+    }
+
+    public void toggleTurn() {
+        isWhiteTurn = !isWhiteTurn;
     }
 }
