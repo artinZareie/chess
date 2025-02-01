@@ -71,6 +71,16 @@ public class Board {
         return tiles[x][y];
     }
 
+    public boolean isOutOfBounds(int[] pos) {
+        int x = pos[0];
+        int y = pos[1];
+        return x < 0 || x >= 8 || y < 0 || y >= 8;
+    }
+
+    public boolean isValidCoord(int[] pos) {
+        return !isOutOfBounds(pos);
+    }
+
     public void move(@NotNull Move move) {
         Tile start = move.getFrom();
         Tile end = move.getTo();

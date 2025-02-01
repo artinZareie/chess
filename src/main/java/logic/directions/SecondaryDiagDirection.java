@@ -1,11 +1,11 @@
 package logic.directions;
 
-public class SecondaryDiagonal extends Direction {
-    public SecondaryDiagonal(boolean isNegative) {
+public class SecondaryDiagDirection extends Direction {
+    public SecondaryDiagDirection(boolean isNegative) {
         super(isNegative);
     }
 
-    public SecondaryDiagonal(boolean isNegative, int maxSteps) {
+    public SecondaryDiagDirection(boolean isNegative, int maxSteps) {
         super(isNegative, maxSteps);
     }
 

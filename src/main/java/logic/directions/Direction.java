@@ -3,6 +3,9 @@ package logic.directions;
 import logic.Engine;
 import logic.Move;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Direction {
     public int maxSteps = 8;
     protected final boolean negativeSteps;
@@ -57,6 +60,28 @@ public abstract class Direction {
     public Move getMove(int[] start, int step) {
         return new Move(Engine.getInstance().getBoard().getTile(start),
                 Engine.getInstance().getBoard().getTile(getPos(start, step)));
+    }
+
+    public List<Move> getMoves(int[] start) {
+        List<Move> moves = new ArrayList<>();
+
+        for (int i = 1; i <= maxSteps; i++) {
+            int[] pos = getPos(start, i);
+            if (Engine.getInstance().getBoard().isOutOfBounds(pos)) {
+                break;
+            }
+
+            if (Engine.getInstance().getBoard().getTile(pos).getPiece() != null) {
+                if (Engine.getInstance().getBoard().getTile(pos).getPiece().isWhite() != Engine.getInstance().getBoard().getTile(start).getPiece().isWhite()) {
+                    moves.add(getMove(start, i));
+                }
+                break;
+            }
+
+            moves.add(getMove(start, i));
+        }
+
+        return moves;
     }
 
     public abstract int[] getDir();
