@@ -33,4 +33,8 @@ public class Tile {
     public void setPiece(Piece piece) {
         this.piece = piece;
     }
+
+    public boolean hasPiece() {
+        return piece != null;
+    }
 }

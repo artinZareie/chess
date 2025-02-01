@@ -7,4 +7,5 @@ module chess.chess {
     opens chess.chess to javafx.fxml;
     opens assets.textures;
     exports chess.chess;
+    exports logic;
 }

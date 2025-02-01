@@ -10,6 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import logic.Board;
+import logic.Engine;
+import logic.pieces.Piece;
 
 public class GameBoardApplication extends GameApplication {
     private static final int WIDTH = 800;
@@ -54,7 +57,7 @@ public class GameBoardApplication extends GameApplication {
         GridPane board = new GridPane();
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
-                TileOverlay tileOverlay = new TileOverlay(this);
+                TileOverlay tileOverlay = new TileOverlay(this, x, y);
                 tileOverlays[x][y] = tileOverlay;
                 board.add(tileOverlay, x, y);
             }
@@ -62,29 +65,11 @@ public class GameBoardApplication extends GameApplication {
 
         FXGL.getGameScene().addUINode(board);
 
-        // Create the initial board.
-        placePiece("wR", 0, 0);
-        placePiece("wN", 1, 0);
-        placePiece("wB", 2, 0);
-        placePiece("wQ", 3, 0);
-        placePiece("wK", 4, 0);
-        placePiece("wB", 5, 0);
-        placePiece("wN", 6, 0);
-        placePiece("wR", 7, 0);
-        for (int i = 0; i < 8; i++) {
-            placePiece("wP", i, 1);
-        }
-
-        placePiece("bR", 0, 7);
-        placePiece("bN", 1, 7);
-        placePiece("bB", 2, 7);
-        placePiece("bQ", 3, 7);
-        placePiece("bK", 4, 7);
-        placePiece("bB", 5, 7);
-        placePiece("bN", 6, 7);
-        placePiece("bR", 7, 7);
-        for (int i = 0; i < 8; i++) {
-            placePiece("bP", i, 6);
+        // Draw pieces based on the current state of the board.
+        Board gameBoard = Engine.getInstance().getBoard();
+        for (Piece piece : gameBoard.getPieces()) {
+            int[] position = piece.getPosition();
+            placePiece(piece.getImageURL(), position[0], position[1]);
         }
     }
 
