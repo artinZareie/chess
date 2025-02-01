@@ -38,23 +38,9 @@ public abstract class Direction {
         return dir;
     }
 
-    public int[] getDiff() {
-        return getDiff(1);
-    }
-
-    public int[] getPos(int[] start) {
-        int[] diff = getDiff();
-        return new int[] {start[0] + diff[0], start[1] + diff[1]};
-    }
-
     public int[] getPos(int[] start, int step) {
         int[] diff = getDiff(step);
         return new int[] {start[0] + diff[0], start[1] + diff[1]};
-    }
-
-    public Move getMove(int[] start) {
-        return new Move(Engine.getInstance().getBoard().getTile(start),
-                Engine.getInstance().getBoard().getTile(getPos(start)));
     }
 
     public Move getMove(int[] start, int step) {

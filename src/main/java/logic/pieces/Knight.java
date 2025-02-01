@@ -1,9 +1,9 @@
 package logic.pieces;
 
 import logic.directions.Direction;
-import logic.directions.Knight23NDirection;
-import logic.directions.Knight23PDirection;
-import logic.directions.Knight32NDirection;
+import logic.directions.Knight12NDirection;
+import logic.directions.Knight12PDirection;
+import logic.directions.Knight21NDirection;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -19,14 +19,14 @@ public class Knight extends Piece {
     @Override
     public List<Direction> getDirections() {
         return List.of(
-                new Knight23NDirection(true, 1),
-                new Knight23NDirection(false, 1),
-                new Knight23PDirection(true, 1),
-                new Knight23PDirection(false, 1),
-                new Knight32NDirection(true, 1),
-                new Knight32NDirection(false, 1),
-                new Knight23PDirection(true, 1),
-                new Knight23PDirection(false, 1)
+                new Knight12NDirection(true, 1),
+                new Knight12NDirection(false, 1),
+                new Knight12PDirection(true, 1),
+                new Knight12PDirection(false, 1),
+                new Knight21NDirection(true, 1),
+                new Knight21NDirection(false, 1),
+                new Knight12PDirection(true, 1),
+                new Knight12PDirection(false, 1)
         );
     }
 }

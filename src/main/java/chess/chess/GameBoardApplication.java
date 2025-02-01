@@ -23,7 +23,7 @@ public class GameBoardApplication extends GameApplication {
     private static final int HEIGHT = 850;
     private static final int TILE_SIZE = 100;
     private static final String TITLE = "Stupid chess game";
-    private final TileOverlay[][] tileOverlays = new TileOverlay[8][8];
+    public final TileOverlay[][] tileOverlays = new TileOverlay[8][8];
     private Tile activeTile = null;
 
     @Override
@@ -35,31 +35,47 @@ public class GameBoardApplication extends GameApplication {
 
     @Override
     protected void initGame() {
+        setupBackground();
+        setupPlayerInfo();
+        setupBoard();
+    }
+
+    private void setupBackground() {
         ImageView bg = FXGL.getAssetLoader().loadTexture("blue-marble.jpg");
         bg.setFitWidth(WIDTH);
         bg.setFitHeight(WIDTH);
-
         FXGL.getGameScene().addUINode(bg);
+    }
 
-        // Create a background for the texts.
+    private void setupPlayerInfo() {
         Rectangle textBackground = new Rectangle(WIDTH, 50);
         textBackground.setFill(Color.DARKCYAN);
         textBackground.setTranslateY(800);
 
-        // Add player names and remaining time with custom styles.
-        StackPane player1Pane = createPlayerPane(Engine.getInstance().whitePlayer.getName() + ": " +
-                formatDuration(Engine.getInstance().whitePlayer.getRemainingTime()), Color.DARKBLUE, Color.DARKCYAN);
+        StackPane player1Pane = createPlayerPane(
+                Engine.getInstance().whitePlayer.getName() + ": " + formatDuration(Engine.getInstance().whitePlayer.getRemainingTime()),
+                Color.DARKBLUE, Color.DARKCYAN);
         player1Pane.setTranslateX(10);
         player1Pane.setTranslateY(820);
 
-        StackPane player2Pane = createPlayerPane(Engine.getInstance().blackPlayer.getName() + ": " +
-                formatDuration(Engine.getInstance().blackPlayer.getRemainingTime()), Color.BLACK, Color.DARKCYAN);
+        StackPane player2Pane = createPlayerPane(
+                Engine.getInstance().blackPlayer.getName() + ": " + formatDuration(Engine.getInstance().blackPlayer.getRemainingTime()),
+                Color.BLACK, Color.DARKCYAN);
         player2Pane.setTranslateX(410);
         player2Pane.setTranslateY(820);
 
         FXGL.getGameScene().addUINode(textBackground);
         FXGL.getGameScene().addUINode(player1Pane);
         FXGL.getGameScene().addUINode(player2Pane);
+    }
+
+    private void setupBoard() {
+        Board gameBoard = Engine.getInstance().getBoard();
+        for (Piece piece : gameBoard.getPieces()) {
+            int[] position = piece.getPosition();
+            position[1] = 7 - position[1];
+            piece.imageView = placePiece(piece.getImageURL(), position[0], position[1]);
+        }
 
         GridPane board = new GridPane();
         for (int y = 0; y < 8; y++) {
@@ -71,13 +87,6 @@ public class GameBoardApplication extends GameApplication {
         }
 
         FXGL.getGameScene().addUINode(board);
-
-        // Draw pieces based on the current state of the board.
-        Board gameBoard = Engine.getInstance().getBoard();
-        for (Piece piece : gameBoard.getPieces()) {
-            int[] position = piece.getPosition();
-            piece.imageView = placePiece(piece.getImageURL(), position[0], position[1]);
-        }
     }
 
     private String formatDuration(Duration duration) {
@@ -102,15 +111,11 @@ public class GameBoardApplication extends GameApplication {
     @NotNull
     private ImageView placePiece(String piece, int x, int y) {
         ImageView pieceView = FXGL.getAssetLoader().loadTexture(piece + ".png");
-
         pieceView.setFitWidth(TILE_SIZE);
         pieceView.setFitHeight(TILE_SIZE);
-
         pieceView.setTranslateX(x * TILE_SIZE);
         pieceView.setTranslateY(y * TILE_SIZE);
-
         FXGL.getGameScene().addUINode(pieceView);
-
         return pieceView;
     }
 
@@ -120,7 +125,6 @@ public class GameBoardApplication extends GameApplication {
                 tileOverlay.deactivate();
             }
         }
-
         activeTile = null;
     }
 

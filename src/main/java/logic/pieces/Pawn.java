@@ -20,7 +20,7 @@ public class Pawn extends Piece {
 
     @Override
     public List<Direction> getDirections() {
-        return List.of(new VerticalDirection(isWhite, hasMoved ? 1 : 2));
+        return List.of(new VerticalDirection(!isWhite, hasMoved ? 1 : 2));
     }
 
     @Override
