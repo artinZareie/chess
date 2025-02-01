@@ -4,6 +4,7 @@ import javafx.scene.image.ImageView;
 import logic.Move;
 import logic.directions.Direction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -34,5 +35,14 @@ public abstract class Piece {
 
     public void move(Move move) {
         setPosition(move.getToX(), move.getToY());
+    }
+
+    public List<Move> getAllAvailableMoves() {
+        List<Move> allMoves = new ArrayList<>();
+        for (Direction direction : getDirections()) {
+            allMoves.addAll(direction.getMoves(getPosition()));
+        }
+
+        return allMoves;
     }
 }

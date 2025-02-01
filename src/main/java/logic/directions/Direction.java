@@ -67,12 +67,13 @@ public abstract class Direction {
 
         for (int i = 1; i <= maxSteps; i++) {
             int[] pos = getPos(start, i);
-            if (Engine.getInstance().getBoard().isOutOfBounds(pos)) {
+            if (Engine.getInstance().getBoard().isOutOfBounds(pos) || !Engine.getInstance().getBoard().isEmpty(pos)) {
                 break;
             }
 
             if (Engine.getInstance().getBoard().getTile(pos).getPiece() != null) {
-                if (Engine.getInstance().getBoard().getTile(pos).getPiece().isWhite() != Engine.getInstance().getBoard().getTile(start).getPiece().isWhite()) {
+                if (Engine.getInstance().getBoard().getTile(pos).getPiece().isWhite() !=
+                        Engine.getInstance().getBoard().getTile(start).getPiece().isWhite()) {
                     moves.add(getMove(start, i));
                 }
                 break;

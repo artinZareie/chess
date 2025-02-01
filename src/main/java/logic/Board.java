@@ -92,4 +92,15 @@ public class Board {
         end.setPiece(start.getPiece());
         start.setPiece(null);
     }
+
+    public boolean isEmpty(int x, int y) {
+        return !tiles[x][y].hasPiece();
+    }
+
+    public boolean isEmpty(int[] pos) {
+        int x = pos[0];
+        int y = pos[1];
+
+        return isEmpty(x, y);
+    }
 }

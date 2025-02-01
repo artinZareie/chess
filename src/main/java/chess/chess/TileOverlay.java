@@ -11,7 +11,8 @@ public class TileOverlay extends StackPane {
     private final GameBoardApplication application;
     private static final int TILE_SIZE = 100;
     private final Rectangle overlay;
-    private boolean isActive;
+    private boolean isActive = false;
+    private boolean isHighlighted = false;
     public final Tile tile;
 
     public TileOverlay(GameBoardApplication gameBoard, int x, int y) {
