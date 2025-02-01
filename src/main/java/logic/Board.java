@@ -1,5 +1,6 @@
 package logic;
 
+import com.almasb.fxgl.dsl.FXGL;
 import logic.pieces.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,9 +65,20 @@ public class Board {
         return tiles[x][y];
     }
 
+    public Tile getTile(int[] pos) {
+        int x = pos[0];
+        int y = pos[1];
+        return tiles[x][y];
+    }
+
     public void move(@NotNull Move move) {
         Tile start = move.getFrom();
         Tile end = move.getTo();
+
+        if (end.hasPiece()) {
+            FXGL.getGameScene().removeUINode(end.getPiece().imageView);
+        }
+
         end.setPiece(start.getPiece());
         start.setPiece(null);
     }
