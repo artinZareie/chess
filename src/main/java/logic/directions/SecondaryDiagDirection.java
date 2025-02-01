@@ -11,6 +11,6 @@ public class SecondaryDiagDirection extends Direction {
 
     @Override
     public int[] getDir() {
-        return new int[] {1, 1};
+        return new int[] {-1, -1};
     }
 }

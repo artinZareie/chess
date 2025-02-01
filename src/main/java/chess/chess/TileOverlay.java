@@ -22,7 +22,7 @@ public class TileOverlay extends StackPane {
 
     public TileOverlay(GameBoardApplication gameBoard, int x, int y) {
         this.application = gameBoard;
-        this.tile = Engine.getInstance().getBoard().getTile(x, y);
+        this.tile = Engine.getInstance().getBoard().getTile(x, 7 - y);
         setPrefSize(TILE_SIZE, TILE_SIZE);
         overlay = new Rectangle(TILE_SIZE, TILE_SIZE);
         overlay.setFill(Color.TRANSPARENT);
@@ -32,6 +32,9 @@ public class TileOverlay extends StackPane {
     }
 
     private void handleClick() {
+        System.out.println("Tile clicked: " + tile.getX() + ", " + tile.getY());
+        System.out.println("Piece: " + tile.getPiece());
+
         if (isHighlighted) {
             Tile activeTile = application.getActiveTile();
             application.deactivateAllTiles();
@@ -91,7 +94,7 @@ public class TileOverlay extends StackPane {
         List<Move> moves = piece.getAllAvailableMoves();
         for (Move move : moves) {
             Tile pos = move.getTo();
-            TileOverlay targetTileOverlay = application.tileOverlays[pos.getY()][pos.getX()];
+            TileOverlay targetTileOverlay = application.tileOverlays[7 - pos.getY()][pos.getX()];
             targetTileOverlay.highlight();
         }
     }

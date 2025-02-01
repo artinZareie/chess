@@ -73,7 +73,6 @@ public class GameBoardApplication extends GameApplication {
         Board gameBoard = Engine.getInstance().getBoard();
         for (Piece piece : gameBoard.getPieces()) {
             int[] position = piece.getPosition();
-            position[1] = position[1];
             piece.imageView = placePiece(piece.getImageURL(), position[0], position[1]);
         }
 
@@ -114,7 +113,7 @@ public class GameBoardApplication extends GameApplication {
         pieceView.setFitWidth(TILE_SIZE);
         pieceView.setFitHeight(TILE_SIZE);
         pieceView.setTranslateX(x * TILE_SIZE);
-        pieceView.setTranslateY(y * TILE_SIZE);
+        pieceView.setTranslateY((7 - y) * TILE_SIZE);
         FXGL.getGameScene().addUINode(pieceView);
         return pieceView;
     }
