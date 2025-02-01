@@ -16,4 +16,20 @@ public class Move {
     public Tile getTo() {
         return to;
     }
+
+    public int getFromX() {
+        return from.getX();
+    }
+
+    public int getFromY() {
+        return from.getY();
+    }
+
+    public int getToX() {
+        return to.getX();
+    }
+
+    public int getToY() {
+        return to.getY();
+    }
 }

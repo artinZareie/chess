@@ -5,13 +5,22 @@ import logic.Move;
 
 public abstract class Direction {
     public int maxSteps = 8;
-    protected boolean negativeSteps = false;
+    protected final boolean negativeSteps;
+
+    public Direction(boolean negativeSteps) {
+        this.negativeSteps = negativeSteps;
+    }
+
+    public Direction(boolean negativeSteps, int maxSteps) {
+        this.negativeSteps = negativeSteps;
+        this.maxSteps = maxSteps;
+    }
 
     public int getMaxSteps() {
         return maxSteps;
     }
 
-    public boolean isNegativeSteps() {
+    public boolean isNegative() {
         return negativeSteps;
     }
 
@@ -19,7 +28,7 @@ public abstract class Direction {
         int[] dir = getDir();
         dir = new int[] {dir[0] * step, dir[1] * step};
 
-        if (isNegativeSteps()) {
+        if (isNegative()) {
             dir = new int[] {dir[0] * -1, dir[1] * -1};
         }
 

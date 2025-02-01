@@ -1,6 +1,10 @@
 package logic.pieces;
 
 import javafx.scene.image.ImageView;
+import logic.Move;
+import logic.directions.Direction;
+
+import java.util.List;
 
 public abstract class Piece {
     protected final boolean isWhite;
@@ -26,4 +30,9 @@ public abstract class Piece {
     }
 
     public abstract String getImageURL();
+    public abstract List<Direction> getDirections();
+
+    public void move(Move move) {
+        setPosition(move.getToX(), move.getToY());
+    }
 }
